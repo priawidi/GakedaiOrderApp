@@ -41,19 +41,13 @@
     </com.google.android.material.card.MaterialCardView>
 
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/google_sign_in_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/card_profile"
-        android:layout_centerHorizontal="true"
-       />
+
 
     <Button
         android:id="@+id/sign_in_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/google_sign_in_btn"
+        android:layout_below="@id/card_profile"
         android:layout_centerHorizontal="true"
         />
 

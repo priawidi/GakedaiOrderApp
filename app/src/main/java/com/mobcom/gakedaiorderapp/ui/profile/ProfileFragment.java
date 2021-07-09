@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -25,12 +26,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.Api;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.mobcom.gakedaiorderapp.LoginActivity;
+import com.mobcom.gakedaiorderapp.MainActivity;
 import com.mobcom.gakedaiorderapp.R;
 import com.mobcom.gakedaiorderapp.api.ApiClient;
 import com.mobcom.gakedaiorderapp.databinding.FragmentProfileBinding;
 import com.mobcom.gakedaiorderapp.model.AuthModel;
+import com.mobcom.gakedaiorderapp.model.GetAuthModel;
 import com.mobcom.gakedaiorderapp.model.GetGoogleUserModel;
 import com.mobcom.gakedaiorderapp.model.GoogleUserModel;
 import com.mobcom.gakedaiorderapp.model.PostGoogleUserModel;
@@ -61,21 +66,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: Initiated");
-        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-
+        //profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.server_client_id))
-                .requestEmail()
-                .build();
-
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(getContext(), gso);
-
 
         return root;
     }
@@ -89,32 +82,64 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         tv_name = view.findViewById(R.id.tv_profile_name);
         iv_photo = view.findViewById(R.id.iv_profile);
 
-
-        SignInButton signInButton = view.findViewById(R.id.google_sign_in_btn);
-        signInButton.setSize(SignInButton.SIZE_WIDE);
-        view.findViewById(R.id.google_sign_in_btn).setOnClickListener(this);
         view.findViewById(R.id.sign_in_btn).setOnClickListener(this);
 
 
     }
 
 
+
     @Override
     public void onStart() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_client_id))
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(getContext(), gso);
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getContext());
+        if (acct != null) {
+            String IdToken = acct.getIdToken();
+            //getProfile(IdToken);
+            getProfileInfo();
+        }
         super.onStart();
-        Log.d(TAG, "onStart: Initiated");
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
-        String idToken = account.getIdToken();
-        getAuthInfo(idToken);
-
-        Log.d(TAG, "onStart: " + account);
-        //updateUI(account);
-
     }
+    private void getProfile(String idToken) {
+        ApiClient.BASE_URL="https://oauth2.googleapis.com/";
+        ApiClient.endpoint().getAuth("tokeninfo?id_token="+idToken).enqueue(new Callback<GetAuthModel>() {
+            @Override
+            public void onResponse(Call<GetAuthModel> call, Response<GetAuthModel> response) {
+
+                tv_name.setText(response.body().getAuthModel().getName());
+                tv_email.setText(response.body().getAuthModel().getEmail());
+                Picasso.get().load(response.body().getAuthModel().getPicture()).into(iv_photo);
+            }
+
+            @Override
+            public void onFailure(Call<GetAuthModel> call, Throwable t) {
+
+            }
+        });
+    }
+    private void getProfileInfo() {
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getContext());
+        if (acct != null) {
+            String personName = acct.getDisplayName();
+            String personGivenName = acct.getGivenName();
+            String personFamilyName = acct.getFamilyName();
+            String personEmail = acct.getEmail();
+            String personId = acct.getId();
+            Uri personPhoto = acct.getPhotoUrl();
+
+            tv_name.setText(personName);
+            tv_email.setText(personEmail);
+            Picasso.get().load(personPhoto).into(iv_photo);
 
 
+        }
+    }
 
     @Override
     public void onDestroyView() {
@@ -126,10 +151,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.google_sign_in_btn:
-                signIn();
-                break;
-
             case R.id.sign_in_btn:
                 signOut();
                 break;
@@ -137,122 +158,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityResult: Initiated");
-
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if(requestCode == RC_SIGN_IN){
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
-        }
-    }
-
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try{
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            String idToken = account.getIdToken();
-            getAuthInfo(idToken);
-            getProfileInfo();
-
-            //updateUI(account);
-            Log.d(TAG, "handleSignInResult: Token " + idToken);
-            Log.d(TAG, "handleSignInResult: account " + account);
-            // Signed in successfully, show authenticated UI.
-        }catch (ApiException e){
-            // The ApiException status code indicates the detailed failure reason.
-            Log.w(TAG, "handleSignInResult:failed code =  "+e.getStatusCode());
-            //updateUI(null);
-        }
-    }
-
-
-    private void getProfileInfo() {
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
-        if (account != null) {
-            String idToken = account.getIdToken();
-            String personName = account.getDisplayName();
-            String personGivenName = account.getGivenName();
-            String personFamilyName = account.getFamilyName();
-            String personEmail = account.getEmail();
-            String personId = account.getId();
-            Uri personPhoto = account.getPhotoUrl();
-
-//            Log.d(TAG, "getProfileInfo: Token " + idToken);
-//            Log.d(TAG, "getProfileInfo: " + personName);
-//            Log.d(TAG, "getProfileInfo: " + personGivenName);
-//            Log.d(TAG, "getProfileInfo: " + personEmail);
-//            Log.d(TAG, "getProfileInfo: " + personId);
-//            Log.d(TAG, "getProfileInfo: " + personPhoto);
-            //getAuthInfo(idToken);
-            //sendProfileInfoToServer(personEmail, personName, personPhoto, personGivenName, personFamilyName);
-            //getUserProfileInfo();
-        }
-    }
-
-    private void getAuthInfo(String idToken) {
-        ApiClient.BASE_URL = "https://oauth2.googleapis.com/";
-        ApiClient.endpoint(). getAuth("tokeninfo?id_token="+idToken).enqueue(new Callback<AuthModel>() {
-            @Override
-            public void onResponse(Call<AuthModel> call, Response<AuthModel> response) {
-                tv_email.setText(response.body().getEmail());
-                tv_name.setText(response.body().getName());
-                Picasso.get().load(response.body().getPicture()).into(iv_photo);
-            }
-
-            @Override
-            public void onFailure(Call<AuthModel> call, Throwable t) {
-
-            }
-        });
-
-    }
-
-    private void sendProfileInfoToServer(String email, String name, Uri photo, String givenName, String familyName) {
-        ApiClient.endpoint().sendUser(email, name, photo,givenName, familyName).enqueue(new Callback<PostGoogleUserModel>() {
-            @Override
-            public void onResponse(Call<PostGoogleUserModel> call, Response<PostGoogleUserModel> response) {
-
-                Log.d(TAG, "onResponse: Success " + response.code());
-
-            }
-
-            @Override
-            public void onFailure(Call<PostGoogleUserModel> call, Throwable t) {
-                Log.d(TAG, "onResponse: Failed" );
-
-            }
-        });
-    }
-
-    private void getUserProfileInfo() {
-        ApiClient.endpoint().getUser().enqueue(new Callback<GetGoogleUserModel>() {
-            @Override
-            public void onResponse(Call<GetGoogleUserModel> call, Response<GetGoogleUserModel> response) {
-                //List<GoogleUserModel> UserList = response.body().getListDataUser();
-                Log.d(TAG, "onResponse: Success " +response.code());
-                tv_email.setText(response.body().getGoogleUserModel().getEmail());
-                tv_name.setText(response.body().getGoogleUserModel().getName());
-                Picasso.get().load(response.body().getGoogleUserModel().getPicture()).into(iv_photo);
-            }
-
-            @Override
-            public void onFailure(Call<GetGoogleUserModel> call, Throwable t) {
-
-            }
-        });
-    }
-    private void signIn() {
-        Log.d(TAG, "signIn: Initiated");
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-        Toast toast = Toast.makeText(getContext(),"Signed In",Toast.LENGTH_SHORT);
-        toast.show();
-
-    }
     private void signOut() {
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -271,7 +176,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Log.d(TAG, "onComplete: User Credentials Removed From App");
-                        // ...
+                        startActivity(new Intent(getContext(), LoginActivity.class));
                     }
                 });
     }
