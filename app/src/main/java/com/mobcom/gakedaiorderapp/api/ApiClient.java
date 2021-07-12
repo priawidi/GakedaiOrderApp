@@ -5,6 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
     public static String BASE_URL = "https://admin.gakedai.com/api/";
+    //public static String BASE_URL = "http://localhost:8000/api/";
     private static Retrofit retrofit;
     public static ApiEndpoint endpoint () {
         Retrofit retrofit = new Retrofit.Builder()

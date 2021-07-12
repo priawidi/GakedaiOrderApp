@@ -5,10 +5,10 @@ import android.net.Uri;
 import com.google.gson.annotations.SerializedName;
 
 public class GoogleUserModel {
+    @SerializedName("user_id")
+    String user_id;
     @SerializedName("email")
     String email;
-    @SerializedName("email_verified")
-    String email_verified;
     @SerializedName("name")
     String name;
     @SerializedName("picture")
@@ -17,33 +17,30 @@ public class GoogleUserModel {
     String given_name;
     @SerializedName("family_name")
     String family_name;
-    @SerializedName("locale")
-    String locale;
 
-    public GoogleUserModel(String email, String email_verified, String name, Uri picture, String given_name, String family_name, String locale) {
+
+
+    public GoogleUserModel(String user_id, String email, String name, Uri picture, String given_name, String family_name) {
+        this.user_id = user_id;
         this.email = email;
-        this.email_verified = email_verified;
         this.name = name;
         this.picture = picture;
         this.given_name = given_name;
         this.family_name = family_name;
-        this.locale = locale;
+    }
+    public String getUser_id() {
+        return user_id;
     }
 
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getEmail_verified() {
-        return email_verified;
-    }
-
-    public void setEmail_verified(String email_verified) {
-        this.email_verified = email_verified;
     }
 
     public String getName() {
@@ -76,13 +73,5 @@ public class GoogleUserModel {
 
     public void setFamily_name(String family_name) {
         this.family_name = family_name;
-    }
-
-    public String getLocale() {
-        return locale;
-    }
-
-    public void setLocale(String locale) {
-        this.locale = locale;
     }
 }

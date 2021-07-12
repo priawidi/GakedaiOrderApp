@@ -136,8 +136,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             tv_name.setText(personName);
             tv_email.setText(personEmail);
             Picasso.get().load(personPhoto).into(iv_photo);
-
-
         }
     }
 
