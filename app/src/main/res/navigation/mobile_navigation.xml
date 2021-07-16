@@ -19,10 +19,9 @@
         android:id="@+id/navigation_cart"
         android:name="com.mobcom.gakedaiorderapp.ui.CartFragment"
         android:label="Cart"
-        tools:layout="@layout/fragment_cart">
-        <action
-            android:id="@+id/action_navigation_cart_to_navigation_order"
-            app:destination="@id/navigation_order" />
+        tools:layout="@layout/fragment_cart"
+   >
+
     </fragment>
 
     <fragment
@@ -31,13 +30,4 @@
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
 
-    <fragment
-        android:id="@+id/navigation_order"
-        android:name="com.mobcom.gakedaiorderapp.ui.OrderFragment"
-        android:label="Order"
-        tools:layout="@layout/fragment_order">
-        <action
-            android:id="@+id/action_navigation_order_to_navigation_home"
-            app:destination="@id/navigation_home" />
-    </fragment>
 </navigation>

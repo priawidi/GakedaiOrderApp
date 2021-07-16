@@ -5,8 +5,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -36,31 +41,26 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ActivityMainBinding binding;
     MenuViewModel menuViewModel;
-    GoogleSignInClient mGoogleSignInClient;
+    NavController navController;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.server_client_id))
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_main);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
+        NavigationUI.setupWithNavController(navView, navController);
 
         menuViewModel = new ViewModelProvider(this).get(MenuViewModel.class);
         menuViewModel.getCart().observe(this, new Observer<List<CartItem>>() {
             @Override
             public void onChanged(List<CartItem> cartItems) {
-                Log.d(TAG, "onChanged: " + cartItems.toString());
-                Log.d(TAG, "onChanged: " + cartItems.size());
+//                Log.d(TAG, "onChanged: " + cartItems.toString());
+//                Log.d(TAG, "onChanged: " + cartItems.size());
+
             }
         });
         sendUserInfo();
@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
     @Override
     public void onBackPressed() {
 

@@ -99,7 +99,7 @@ public interface ApiEndpoint {
             @Field("meja_id") String meja_id
     );
 
-    @GET("order_history")
-    Call<GetOrderHistoryModel> getHistory();
+    @GET
+    Call<GetOrderHistoryModel> getHistory(@Url String url);
 
 }

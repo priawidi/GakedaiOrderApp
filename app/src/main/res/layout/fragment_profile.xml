@@ -91,12 +91,13 @@
                 android:layout_marginTop="16dp"
                 android:layout_gravity="center_horizontal"
                 android:text="Menu Favorit" />
-            <TextView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_gravity="center"
-                android:text="Coming Soon" />
+               tools:listitem="@layout/rv_history_item"/>
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
 

@@ -32,7 +32,7 @@ public class MenuRepo {
             @Override
             public void onResponse(Call<GetMenuModel> call, Response<GetMenuModel> response) {
                 List<MenuModel> menuList = response.body().getListDataMenu();
-                mutableMenuList.setValue(response.body().getListDataMenu());
+                mutableMenuList.setValue(menuList);
 
             }
 

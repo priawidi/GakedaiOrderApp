@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.mobcom.gakedaiorderapp.R;
-import com.mobcom.gakedaiorderapp.databinding.FragmentOrderBinding;
 import com.mobcom.gakedaiorderapp.viewmodel.MenuViewModel;
 
 public class OrderActivity extends AppCompatActivity {

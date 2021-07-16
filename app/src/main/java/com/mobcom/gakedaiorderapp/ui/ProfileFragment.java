@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -22,10 +24,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.mobcom.gakedaiorderapp.R;
+import com.mobcom.gakedaiorderapp.adapter.HistoryListAdapter;
+import com.mobcom.gakedaiorderapp.api.ApiClient;
 import com.mobcom.gakedaiorderapp.databinding.FragmentProfileBinding;
+import com.mobcom.gakedaiorderapp.model.order_history.GetOrderHistoryModel;
+import com.mobcom.gakedaiorderapp.model.order_history.OrderHistoryModel;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
@@ -34,6 +46,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private static final int RC_SIGN_IN = 0;
     GoogleSignInClient mGoogleSignInClient;
     private FragmentProfileBinding binding;
+    RecyclerView rvHistory;
+    LinearLayoutManager linearLayoutManager;
     TextView tv_email, tv_name;
     ImageView iv_photo;
 
@@ -56,8 +70,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         tv_name = view.findViewById(R.id.tv_profile_name);
         iv_photo = view.findViewById(R.id.iv_profile);
 
+        rvHistory = view.findViewById(R.id.rv_history);
+        linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        rvHistory.setLayoutManager(linearLayoutManager);
+        rvHistory.setHasFixedSize(true);
         view.findViewById(R.id.sign_in_btn).setOnClickListener(this);
-
 
     }
 
@@ -94,7 +111,25 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             tv_name.setText(personName);
             tv_email.setText(personEmail);
             Picasso.get().load(personPhoto).into(iv_photo);
+            getHistory(personId);
         }
+    }
+
+    private void getHistory(String user_id){
+        ApiClient.endpoint().getHistory("order_history/"+ user_id).enqueue(new Callback<GetOrderHistoryModel>() {
+            @Override
+            public void onResponse(Call<GetOrderHistoryModel> call, Response<GetOrderHistoryModel> response) {
+
+                List<OrderHistoryModel> HistoryList = response.body().getListOrderHistory();
+                HistoryListAdapter adapter = new HistoryListAdapter(HistoryList);
+                rvHistory.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<GetOrderHistoryModel> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

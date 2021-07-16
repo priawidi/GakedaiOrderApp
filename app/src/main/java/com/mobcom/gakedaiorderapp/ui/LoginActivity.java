@@ -80,9 +80,11 @@ public class LoginActivity extends AppCompatActivity {
         if (account != null) {
             Toast.makeText(this, "Sign In Sukses", Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, MainActivity.class));
+            finish();
 
         } else {
             Toast.makeText(this, "Kamu belum Sign In", Toast.LENGTH_LONG).show();
+
         }
 
     }

@@ -9,14 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -27,17 +24,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.api.Api;
 import com.mobcom.gakedaiorderapp.R;
-import com.mobcom.gakedaiorderapp.adapter.CartAdapter;
 import com.mobcom.gakedaiorderapp.adapter.CartListAdapter;
 import com.mobcom.gakedaiorderapp.api.ApiClient;
 import com.mobcom.gakedaiorderapp.databinding.FragmentCartBinding;
 import com.mobcom.gakedaiorderapp.model.CartItem;
-import com.mobcom.gakedaiorderapp.model.cart.CartModel;
-import com.mobcom.gakedaiorderapp.model.cart.GetCartModel;
-import com.mobcom.gakedaiorderapp.model.cart.PostCartModel;
-import com.mobcom.gakedaiorderapp.model.menu.MenuModel;
 import com.mobcom.gakedaiorderapp.model.order_history.PostOrderHistoryModel;
 import com.mobcom.gakedaiorderapp.model.order_item.PostOrderItemModel;
 import com.mobcom.gakedaiorderapp.viewmodel.MenuViewModel;
@@ -146,14 +137,7 @@ public class CartFragment extends Fragment implements CartListAdapter.Cartinterf
 
                     sendOrderItem(Qty, Name, totalPrice, Photo, UniqueCode, MejaId);
                 }
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                OrderFragment fragment = new OrderFragment();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("Code", UniqueCode);
-//                fragment.setArguments(bundle);
-//                fragmentTransaction.add(R.id.fragment_container, fragment).commit();
-//                Log.d(TAG, "onClick: NBUNDLE" + bundle);
+
 
                 Intent intent = new Intent(getActivity().getBaseContext(), OrderActivity.class);
                 intent.putExtra("Code", UniqueCode);
