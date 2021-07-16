@@ -1,23 +1,23 @@
-package com.mobcom.gakedaiorderapp.model;
+package com.mobcom.gakedaiorderapp.model.order_history;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class GetGoogleUserModel {
+public class GetOrderHistoryModel {
     @SerializedName("status")
     String status;
     @SerializedName("result")
     String result;
-    @SerializedName("user")
-    GoogleUserModel googleUserModel;
+    @SerializedName("menu")
+    List<OrderHistoryModel> ListOrderHistory;
     @SerializedName("message")
     String message;
 
-    public GetGoogleUserModel(String status, String result, GoogleUserModel googleUserModel, String message) {
+    public GetOrderHistoryModel(String status, String result, List<OrderHistoryModel> listOrderHistory, String message) {
         this.status = status;
         this.result = result;
-        this.googleUserModel = googleUserModel;
+        ListOrderHistory = listOrderHistory;
         this.message = message;
     }
 
@@ -37,12 +37,12 @@ public class GetGoogleUserModel {
         this.result = result;
     }
 
-    public GoogleUserModel getGoogleUserModel() {
-        return googleUserModel;
+    public List<OrderHistoryModel> getListOrderHistory() {
+        return ListOrderHistory;
     }
 
-    public void setGoogleUserModel(GoogleUserModel googleUserModel) {
-        this.googleUserModel = googleUserModel;
+    public void setListOrderHistory(List<OrderHistoryModel> listOrderHistory) {
+        ListOrderHistory = listOrderHistory;
     }
 
     public String getMessage() {

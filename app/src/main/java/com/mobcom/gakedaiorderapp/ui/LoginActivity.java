@@ -1,15 +1,19 @@
-package com.mobcom.gakedaiorderapp;
+package com.mobcom.gakedaiorderapp.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -17,14 +21,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.Api;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.mobcom.gakedaiorderapp.R;
 import com.mobcom.gakedaiorderapp.api.ApiClient;
-import com.mobcom.gakedaiorderapp.model.GetAuthModel;
-import com.squareup.picasso.Picasso;
+import com.mobcom.gakedaiorderapp.databinding.ActivityMainBinding;
+import com.mobcom.gakedaiorderapp.model.CartItem;
+import com.mobcom.gakedaiorderapp.model.google.GetGoogleUserModel;
+import com.mobcom.gakedaiorderapp.viewmodel.MenuViewModel;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int RC_SIGN_IN = 0;
     GoogleSignInClient mGoogleSignInClient;
-    GoogleApiClient googleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +78,11 @@ public class LoginActivity extends AppCompatActivity {
     public void updateUI(GoogleSignInAccount account) {
 
         if (account != null) {
-            Toast.makeText(this, "U Signed In successfully", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Sign In Sukses", Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, MainActivity.class));
 
         } else {
-            Toast.makeText(this, "U Didnt signed in", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Kamu belum Sign In", Toast.LENGTH_LONG).show();
         }
 
     }

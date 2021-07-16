@@ -1,32 +1,31 @@
-package com.mobcom.gakedaiorderapp;
+package com.mobcom.gakedaiorderapp.ui;
+
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
+import com.mobcom.gakedaiorderapp.R;
 import com.mobcom.gakedaiorderapp.api.ApiClient;
 import com.mobcom.gakedaiorderapp.databinding.ActivityMainBinding;
-import com.mobcom.gakedaiorderapp.model.GetGoogleUserModel;
-import com.mobcom.gakedaiorderapp.model.PostToken;
+import com.mobcom.gakedaiorderapp.model.CartItem;
+import com.mobcom.gakedaiorderapp.model.google.GetGoogleUserModel;
+import com.mobcom.gakedaiorderapp.viewmodel.MenuViewModel;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private ActivityMainBinding binding;
+    MenuViewModel menuViewModel;
     GoogleSignInClient mGoogleSignInClient;
 
     @Override
@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        //checkSignIn();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -56,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+        menuViewModel = new ViewModelProvider(this).get(MenuViewModel.class);
+        menuViewModel.getCart().observe(this, new Observer<List<CartItem>>() {
+            @Override
+            public void onChanged(List<CartItem> cartItems) {
+                Log.d(TAG, "onChanged: " + cartItems.toString());
+                Log.d(TAG, "onChanged: " + cartItems.size());
+            }
+        });
         sendUserInfo();
     }
 
@@ -98,63 +105,4 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    public void checkSignIn(){
-        //Task<GoogleSignInAccount> task = mGoogleSignInClient.silentSignIn();
-        mGoogleSignInClient.silentSignIn()
-                .addOnCompleteListener(
-                        this,
-                        new OnCompleteListener<GoogleSignInAccount>() {
-                            @Override
-                            public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
-                                Log.d(TAG, "onComplete: Silent Sign In Complete");
-                                //handleSignInResult(task);
-                            }
-                        });
-    }
-
-    private void handleSignInResult(Task<GoogleSignInAccount> task) {
-        try {
-            GoogleSignInAccount account = task.getResult(ApiException.class);
-            String idToken = account.getIdToken();
-            Log.d(TAG, "handleSignInResult: " +idToken);
-            //sendToken(idToken);
-
-            // TODO(developer): send ID Token to server and validate
-
-            //updateUI(account);
-        } catch (ApiException e) {
-            Log.w(TAG, "handleSignInResult:error", e);
-            //updateUI(null);
-        }
-    }
-    public void updateUI(GoogleSignInAccount account) {
-
-        if (account != null) {
-            Toast.makeText(this, "U Signed In successfully", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this, MainActivity.class));
-
-        } else {
-            Toast.makeText(this, "U Didnt signed in", Toast.LENGTH_LONG).show();
-        }
-
-    }
-
-    public void sendToken(String token){
-        ApiClient.endpoint().sendToken(token).enqueue(new Callback<PostToken>() {
-            @Override
-            public void onResponse(Call<PostToken> call, Response<PostToken> response) {
-                Log.d(TAG, "onResponse: Is Success");
-
-            }
-
-            @Override
-            public void onFailure(Call<PostToken> call, Throwable t) {
-                Log.d(TAG, "onFailure: Failed");
-
-            }
-        });
-    }
-
-
-
 }

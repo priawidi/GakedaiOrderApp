@@ -5,8 +5,7 @@
     android:id="@+id/relative_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment"
-    >
+    tools:context=".ui.HomeFragment">
 
 
     <RelativeLayout
@@ -16,18 +15,20 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="194dp"
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="12dp"
             android:layout_marginVertical="12dp"
-            android:backgroundTint="@color/cardview_dark_background"
+            android:backgroundTint="@color/white"
+            android:elevation="2dp"
             app:cardCornerRadius="8dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_dashboard_black_24dp" />
+                android:background="@drawable/image_shape"
+                android:src="@drawable/cover" />
 
 
         </androidx.cardview.widget.CardView>
@@ -40,6 +41,7 @@
         android:layout_below="@+id/relative_image"
         android:layout_marginBottom="60dp">
 
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -47,14 +49,36 @@
             app:cardCornerRadius="4dp"
             app:cardElevation="2dp">
 
-            <ScrollView
+            <ProgressBar
+                android:id="@+id/loading_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:indeterminate="true"
+                android:minWidth="40dp"
+                android:minHeight="40dp"
+                android:visibility="gone" />
+
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:textSize="16dp"
+                        android:text="Menu"
+                        style="@style/TextAppearance.AppCompat.Title"
+                        android:gravity="center"
+                        />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_menu"
@@ -62,23 +86,12 @@
                         android:layout_height="match_parent"
                         tools:listitem="@layout/rv_menu_item" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:text="PEMBATAS NIH BOS" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_minum"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        tools:listitem="@layout/rv_menu_item" />
 
 
                 </LinearLayout>
 
 
-            </ScrollView>
+            </androidx.core.widget.NestedScrollView>
 
 
         </androidx.cardview.widget.CardView>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile.ProfileFragment">
+    tools:context=".ui.ProfileFragment">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_profile"
@@ -22,33 +22,82 @@
                 android:id="@+id/iv_profile"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:background="@drawable/image_shape"
                 android:src="@drawable/ic_baseline_shopping_cart_24" />
 
             <TextView
                 android:id="@+id/tv_profile_name"
+                style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Widi" />
+                android:text="Name" />
 
             <TextView
                 android:id="@+id/tv_profile_email"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="prianugrahw@gmail.com" />
+                android:text="Email" />
         </LinearLayout>
 
 
     </com.google.android.material.card.MaterialCardView>
 
 
-
-
     <Button
         android:id="@+id/sign_in_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/card_profile"
+        android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
-        />
+        android:text="Sign Out" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/card_profile">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/favorite_card"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_margin="4dp">
+
+            <TextView
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Menu Favorit" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center"
+                android:text="Coming Soon" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/history_card"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_below="@id/favorite_card"
+            android:layout_margin="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center_horizontal"
+                android:text="Menu Favorit" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center"
+                android:text="Coming Soon" />
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.mobcom.gakedaiorderapp.ui.profile;
+package com.mobcom.gakedaiorderapp.ui;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,42 +14,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.Api;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.mobcom.gakedaiorderapp.LoginActivity;
-import com.mobcom.gakedaiorderapp.MainActivity;
 import com.mobcom.gakedaiorderapp.R;
-import com.mobcom.gakedaiorderapp.api.ApiClient;
 import com.mobcom.gakedaiorderapp.databinding.FragmentProfileBinding;
-import com.mobcom.gakedaiorderapp.model.AuthModel;
-import com.mobcom.gakedaiorderapp.model.GetAuthModel;
-import com.mobcom.gakedaiorderapp.model.GetGoogleUserModel;
-import com.mobcom.gakedaiorderapp.model.GoogleUserModel;
-import com.mobcom.gakedaiorderapp.model.PostGoogleUserModel;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
-import java.util.concurrent.Executor;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static android.content.ContentValues.TAG;
 
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
@@ -58,7 +33,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "ProfileFragment";
     private static final int RC_SIGN_IN = 0;
     GoogleSignInClient mGoogleSignInClient;
-    private ProfileViewModel profileViewModel;
     private FragmentProfileBinding binding;
     TextView tv_email, tv_name;
     ImageView iv_photo;
@@ -106,23 +80,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
         super.onStart();
     }
-    private void getProfile(String idToken) {
-        ApiClient.BASE_URL="https://oauth2.googleapis.com/";
-        ApiClient.endpoint().getAuth("tokeninfo?id_token="+idToken).enqueue(new Callback<GetAuthModel>() {
-            @Override
-            public void onResponse(Call<GetAuthModel> call, Response<GetAuthModel> response) {
 
-                tv_name.setText(response.body().getAuthModel().getName());
-                tv_email.setText(response.body().getAuthModel().getEmail());
-                Picasso.get().load(response.body().getAuthModel().getPicture()).into(iv_photo);
-            }
-
-            @Override
-            public void onFailure(Call<GetAuthModel> call, Throwable t) {
-
-            }
-        });
-    }
     private void getProfileInfo() {
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getContext());
         if (acct != null) {

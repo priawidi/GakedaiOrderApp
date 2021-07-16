@@ -1,17 +1,18 @@
-package com.mobcom.gakedaiorderapp.model;
+package com.mobcom.gakedaiorderapp.model.google;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PostGoogleUserModel {
+public class GetGoogleUserModel {
     @SerializedName("status")
     String status;
     @SerializedName("result")
     String result;
+    @SerializedName("user")
     GoogleUserModel googleUserModel;
     @SerializedName("message")
     String message;
 
-    public PostGoogleUserModel(String status, String result, GoogleUserModel googleUserModel, String message) {
+    public GetGoogleUserModel(String status, String result, GoogleUserModel googleUserModel, String message) {
         this.status = status;
         this.result = result;
         this.googleUserModel = googleUserModel;

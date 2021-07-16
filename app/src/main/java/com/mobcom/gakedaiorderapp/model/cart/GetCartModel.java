@@ -1,20 +1,23 @@
-package com.mobcom.gakedaiorderapp.model;
+package com.mobcom.gakedaiorderapp.model.cart;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PostCartModel {
+import java.util.List;
+
+public class GetCartModel {
     @SerializedName("status")
     String status;
     @SerializedName("result")
     String result;
-    CartModel cartModel;
+    @SerializedName("menu")
+    List<CartModel> ListCartMenu;
     @SerializedName("message")
     String message;
 
-    public PostCartModel(String status, String result, CartModel cartModel, String message) {
+    public GetCartModel(String status, String result, List<CartModel> listCartMenu, String message) {
         this.status = status;
         this.result = result;
-        this.cartModel = cartModel;
+        ListCartMenu = listCartMenu;
         this.message = message;
     }
 
@@ -34,12 +37,12 @@ public class PostCartModel {
         this.result = result;
     }
 
-    public CartModel getCartModel() {
-        return cartModel;
+    public List<CartModel> getListCartMenu() {
+        return ListCartMenu;
     }
 
-    public void setCartModel(CartModel cartModel) {
-        this.cartModel = cartModel;
+    public void setListCartMenu(List<CartModel> listCartMenu) {
+        ListCartMenu = listCartMenu;
     }
 
     public String getMessage() {

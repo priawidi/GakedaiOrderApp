@@ -2,7 +2,6 @@ package com.mobcom.gakedaiorderapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,21 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mobcom.gakedaiorderapp.R;
 import com.mobcom.gakedaiorderapp.api.ApiClient;
-import com.mobcom.gakedaiorderapp.model.MenuModel;
-import com.mobcom.gakedaiorderapp.model.PostCartModel;
-import com.mobcom.gakedaiorderapp.ui.cart.CartFragment;
-import com.mobcom.gakedaiorderapp.ui.home.HomeFragment;
+import com.mobcom.gakedaiorderapp.model.menu.MenuModel;
+import com.mobcom.gakedaiorderapp.model.cart.PostCartModel;
+import com.mobcom.gakedaiorderapp.ui.HomeFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -48,7 +43,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public TextView  tv_name, tv_price, tv_detail, tv_status, tv_btn;
         public ImageButton btn_plus, btn_min;
         public ImageView tv_photo;
-        public CardView btn_send;
+        public ImageButton btn_send;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,7 +51,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tv_price = itemView.findViewById(R.id.tv_price);
             tv_photo = itemView.findViewById(R.id.tv_photo);
             tv_detail = itemView.findViewById(R.id.tv_detail);
-            tv_status = itemView.findViewById(R.id.tv_status);
+          //  tv_status = itemView.findViewById(R.id.tv_status);
 
             tv_btn = itemView.findViewById(R.id.tv_btn_qty);
             btn_plus = itemView.findViewById(R.id.btn_plus);
@@ -88,7 +83,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public ImageButton getBtn_min() {
             return btn_min;
         }
-        public CardView getBtn_send() {
+        public ImageButton getBtn_send() {
             return btn_send;
         }
     }
@@ -113,11 +108,11 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         String Price = mlistMenu.get(position).getPrice();
         String Photo = mlistMenu.get(position).getPhoto();
         String Detail = mlistMenu.get(position).getDetail();
-        String Status = mlistMenu.get(position).getStatus();
-        viewHolder.getTv_name().setText("nama " + Name);
-        viewHolder.getTv_price().setText("harga " + Price);
-        viewHolder.getTv_detail().setText("detail " + mlistMenu.get(position).getDetail());
-        viewHolder.getTv_status().setText("status " + mlistMenu.get(position).getStatus());
+        //String Status = mlistMenu.get(position).getStatus();
+        viewHolder.getTv_name().setText(Name);
+        viewHolder.getTv_price().setText(Price);
+        viewHolder.getTv_detail().setText(Detail);
+       // viewHolder.getTv_status().setText("status " + mlistMenu.get(position).getStatus());
 //        Log.d(TAG, "onBindViewHolder: " + mlistMenu.get(position).getPhoto());
         Picasso.get().load("https://admin.gakedai.com/api/menu/" + mlistMenu.get(position).getPhoto()).into(viewHolder.getTv_photo());
 

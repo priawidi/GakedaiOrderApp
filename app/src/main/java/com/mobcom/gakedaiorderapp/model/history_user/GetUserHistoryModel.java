@@ -1,21 +1,23 @@
-package com.mobcom.gakedaiorderapp.model;
+package com.mobcom.gakedaiorderapp.model.history_user;
 
 import com.google.gson.annotations.SerializedName;
 
-public class GetAuthModel {
+import java.util.List;
+
+public class GetUserHistoryModel {
     @SerializedName("status")
     String status;
     @SerializedName("result")
     String result;
-    @SerializedName("user")
-    AuthModel authModel;
+    @SerializedName("menu")
+    List<UserHistoryModel> ListUserHistory;
     @SerializedName("message")
     String message;
 
-    public GetAuthModel(String status, String result, AuthModel authModel, String message) {
+    public GetUserHistoryModel(String status, String result, List<UserHistoryModel> listUserHistory, String message) {
         this.status = status;
         this.result = result;
-        this.authModel = authModel;
+        ListUserHistory = listUserHistory;
         this.message = message;
     }
 
@@ -35,12 +37,12 @@ public class GetAuthModel {
         this.result = result;
     }
 
-    public AuthModel getAuthModel() {
-        return authModel;
+    public List<UserHistoryModel> getListUserHistory() {
+        return ListUserHistory;
     }
 
-    public void setAuthModel(AuthModel authModel) {
-        this.authModel = authModel;
+    public void setListUserHistory(List<UserHistoryModel> listUserHistory) {
+        ListUserHistory = listUserHistory;
     }
 
     public String getMessage() {

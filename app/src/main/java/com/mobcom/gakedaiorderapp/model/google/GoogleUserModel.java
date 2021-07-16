@@ -1,4 +1,4 @@
-package com.mobcom.gakedaiorderapp.model;
+package com.mobcom.gakedaiorderapp.model.google;
 
 import android.net.Uri;
 

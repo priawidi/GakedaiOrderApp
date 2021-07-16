@@ -1,15 +1,15 @@
-package com.mobcom.gakedaiorderapp;
+package com.mobcom.gakedaiorderapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PersistableBundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.mobcom.gakedaiorderapp.R;
 
 public class SplashActivity extends AppCompatActivity {
     @Override
