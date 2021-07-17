@@ -6,7 +6,7 @@ This app will let customers to order food or drinks from their own smartphone (w
 - Customers pick their order in the app
 - Click the cart button which will show the items and the total price
 - Click the order button and unique code will appear
-- Finally waiters/cashier scan/confirm the code and the orders appear on kitchen display.
+- Finally waiters/cashier confirm the code and the orders appear on kitchen display.
 
 ### Advanced Topic
 - REST API
