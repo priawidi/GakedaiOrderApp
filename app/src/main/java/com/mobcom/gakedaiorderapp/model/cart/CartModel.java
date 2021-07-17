@@ -10,9 +10,6 @@ public class CartModel {
     @SerializedName("user_name")
     @Expose
     private String userName;
-    @SerializedName("item_qty")
-    @Expose
-    private String itemQty;
     @SerializedName("item_name")
     @Expose
     private String itemName;
@@ -43,14 +40,6 @@ public class CartModel {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getItemQty() {
-        return itemQty;
-    }
-
-    public void setItemQty(String itemQty) {
-        this.itemQty = itemQty;
     }
 
     public String getItemName() {

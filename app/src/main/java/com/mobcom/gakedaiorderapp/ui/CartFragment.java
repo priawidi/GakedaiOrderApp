@@ -105,7 +105,6 @@ public class CartFragment extends Fragment implements CartListAdapter.Cartinterf
                 Log.d(TAG, "onChanged: " + cartItems);
                 binding.btnCheckout.setEnabled(cartItems.size() > 0);
                 index = cartItems.size();
-
             }
         });
         menuViewModel.getTotalPrice().observe(getViewLifecycleOwner(), new Observer<Integer>() {
@@ -146,7 +145,6 @@ public class CartFragment extends Fragment implements CartListAdapter.Cartinterf
             }
         });
     }
-
 
     @Override
     public void onDestroyView() {

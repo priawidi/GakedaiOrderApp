@@ -60,6 +60,7 @@
                         style="@style/TextAppearance.MaterialComponents.Subtitle1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
                         android:text="Email" />
                 </LinearLayout>
 
@@ -83,24 +84,59 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/favorite_card"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
-                    android:layout_margin="4dp">
+                    android:layout_height="260dp"
+                    android:layout_margin="4dp"
+                    app:cardCornerRadius="16dp">
 
-                    <TextView
-                        style="@style/TextAppearance.MaterialComponents.Body1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="16dp"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                        android:text="Menu Favorit" />
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/btn_add_fav"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_gravity="left"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:backgroundTint="@color/cream_bisque"
+                            android:elevation="2dp"
+                            app:cardCornerRadius="16dp"
+                            app:contentPadding="8dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="16dp"
-                        android:text="Coming Soon" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Tambah Menu Favorit" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <Space
+                            android:id="@+id/space"
+                            android:layout_width="match_parent"
+                            android:layout_height="12dp"
+                            android:layout_below="@id/btn_add_fav" />
+
+                        <TextView
+                            android:id="@+id/text_fav"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/space"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:text="Menu Favorit Kamu"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_favorite"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/text_fav"
+                            tools:listitem="@layout/rv_favorite_item" />
+                    </RelativeLayout>
+
+
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -108,7 +144,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="240dp"
                     android:layout_below="@id/favorite_card"
-                    android:layout_margin="4dp">
+                    android:layout_margin="4dp"
+                    app:cardCornerRadius="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -121,7 +158,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="16dp"
-                            android:text="Riwayat Pesanan" />
+                            android:text="Riwayat Pesanan Kamu" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_history"

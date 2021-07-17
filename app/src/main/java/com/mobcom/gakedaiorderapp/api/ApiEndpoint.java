@@ -66,7 +66,6 @@ public interface ApiEndpoint {
     @POST("cart")
     Call<PostCartModel> sendCart(@Field("user_id") String user_id,
                                  @Field("user_name") String user_name,
-                                 @Field("item_qty") String item_qty,
                                  @Field("item_name") String item_name,
                                  @Field("item_price") String item_price,
                                  @Field("item_photo") String item_photo

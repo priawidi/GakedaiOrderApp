@@ -36,7 +36,7 @@ public class HistoryUserAdapter extends RecyclerView.Adapter<HistoryUserAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.tv_item_name.setText(mlistMenu.get(position).getItem_name());
         holder.tv_item_qty.setText(mlistMenu.get(position).getItem_qty());
-        holder.tv_item_price.setText(mlistMenu.get(position).getItem_price());
+        holder.tv_item_price.setText("Rp." +mlistMenu.get(position).getItem_price());
         Picasso.get().load("https://admin.gakedai.com/api/order_item_image/"+mlistMenu.get(position).getItem_photo()).into(holder.iv_item_photo);
 
     }

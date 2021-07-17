@@ -13,8 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GakedaiOrderApp">
-        <activity android:name=".ui.HistoryActivity"></activity>
-        <activity android:name=".ui.OrderActivity"></activity>
+        <activity android:name=".ui.FavoriteActivity"></activity>
+        <activity android:name=".ui.HistoryActivity" />
+        <activity android:name=".ui.OrderActivity" />
         <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.SplashActivity">
             <intent-filter>
