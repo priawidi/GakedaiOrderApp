@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     MenuViewModel menuViewModel;
     NavController navController;
-
+    String pPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,18 +68,24 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendUserInfo() {
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        if(acct != null ){
             String pName = acct.getDisplayName();
             String pGivenName = acct.getGivenName();
             String pFamilyName = acct.getFamilyName();
             String pEmail = acct.getEmail();
             String pId = acct.getId();
             Log.d(TAG, "sendUserInfo: " +pId);
-            Uri pPhoto = acct.getPhotoUrl();
+            if (acct.getPhotoUrl() == null){
+                pPhoto = "-";
+                Log.d(TAG, "sendUserInfo: " + pPhoto);
+            }else {
+                pPhoto = acct.getPhotoUrl().toString();
+                Log.d(TAG, "sendUserInfo: " + pPhoto);
+            }
             ApiClient.endpoint().sendUser(pId, pEmail,pName,pPhoto,pGivenName,pFamilyName).enqueue(new Callback<GetGoogleUserModel>() {
                 @Override
                 public void onResponse(Call<GetGoogleUserModel> call, Response<GetGoogleUserModel> response) {
 
+                    Log.d(TAG, "onResponse: " + response.code());
                     Log.d(TAG, "onResponse: Success Sent User");
                 }
 
@@ -89,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "onFailure: Failde");
                 }
             });
-        }
+
 
     }
 

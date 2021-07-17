@@ -54,7 +54,7 @@ public class CartFragment extends Fragment implements CartListAdapter.Cartinterf
     CartFragment cartFragment;
     NavController navController;
     Spinner spinner;
-    String[] meja = {"1","2","3","4","5","6","7","8","9","10"};
+    String[] meja = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
     String MejaId;
 
     int index = 0;
@@ -148,7 +148,6 @@ public class CartFragment extends Fragment implements CartListAdapter.Cartinterf
     }
 
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -195,12 +194,12 @@ public class CartFragment extends Fragment implements CartListAdapter.Cartinterf
 
     }
 
-    public void sendOrderToKitchen(String total_price, String unique_code){
+    public void sendOrderToKitchen(String total_price, String unique_code) {
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(context);
         String userId = acct.getId();
         String userName = acct.getDisplayName();
-        ApiClient.endpoint().sendHistory(userId, userName, total_price, unique_code, MejaId ).enqueue(new Callback<PostOrderHistoryModel>() {
+        ApiClient.endpoint().sendHistory(userId, userName, total_price, unique_code, MejaId).enqueue(new Callback<PostOrderHistoryModel>() {
             @Override
             public void onResponse(Call<PostOrderHistoryModel> call, Response<PostOrderHistoryModel> response) {
                 Log.d(TAG, "onResponse: Success");
@@ -219,7 +218,6 @@ public class CartFragment extends Fragment implements CartListAdapter.Cartinterf
     private void getOrderFromKitchen() {
 //        ApiClient.endpoint().
     }
-
 
 
 }

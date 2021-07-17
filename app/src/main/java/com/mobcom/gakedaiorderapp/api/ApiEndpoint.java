@@ -8,6 +8,7 @@ import com.mobcom.gakedaiorderapp.model.menu.GetMenuModel;
 import com.mobcom.gakedaiorderapp.model.cart.PostCartModel;
 import com.mobcom.gakedaiorderapp.model.order_history.GetOrderHistoryModel;
 import com.mobcom.gakedaiorderapp.model.order_history.PostOrderHistoryModel;
+import com.mobcom.gakedaiorderapp.model.order_item.GetOrderItemModel;
 import com.mobcom.gakedaiorderapp.model.order_item.PostOrderItemModel;
 
 import retrofit2.Call;
@@ -38,7 +39,7 @@ public interface ApiEndpoint {
     Call<GetGoogleUserModel> sendUser(@Field("user_id") String id,
                                       @Field("email") String email,
                                       @Field("name") String name,
-                                      @Field("picture") Uri picture,
+                                      @Field("picture") String picture,
                                       @Field("given_name") String given_name,
                                       @Field("family_name") String family_name);
 
@@ -101,5 +102,8 @@ public interface ApiEndpoint {
 
     @GET
     Call<GetOrderHistoryModel> getHistory(@Url String url);
+
+    @GET
+    Call<GetOrderItemModel> getOrderItem(@Url String url);
 
 }
