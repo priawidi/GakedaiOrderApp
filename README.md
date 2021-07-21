@@ -12,4 +12,4 @@ This app will let customers to order food or drinks from their own smartphone (w
 - REST API
 
 ### Links
-- Google Play : https://play.google.com/apps/internaltest/4699544216488252907
+- Google Play : https://play.google.com/store/apps/details?id=com.mobcom.gakedaiorderapp
